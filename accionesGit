@@ -14,3 +14,5 @@ Crear rama:
 	git branch "<Nombre_de_la_nueva_rama>"
 Moverse entre ramas:
 	git checkout <Nombre_de_la_rama>
+Actualizar en una PC:
+	git pull origin <Nombre_de_la_rama_a_copiar>
