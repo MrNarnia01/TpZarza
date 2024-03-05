@@ -1,0 +1,31 @@
+Limpiar Docker:
+	docker system prune -a
+Actualizar back:
+	chmod +x mvnw
+	./mvnw clean package -DskipTests
+Crear imagen:
+	docker-compose build java_app
+Crear contenedory levantarlo:
+	docker-compose up
+Bajar y borrar contenedor:
+	docker-compose down
+
+Crear y levantar Front:
+	docker build -t vue-app .
+	docker run -p 5173:5173 vue-app
+	
+Comando .Vue:
+	npm run dev
+
+Codigos Error:
+	1001: Entidad no encontrada
+	1002: Lista vacia o inexistente
+	1003: Datos erroneos
+	1004: Usuario no encontrado
+	1005: Contraseña incorrecta
+	1006: Usuario ya en uso
+	1007: Usuario con caracteres insuficientes
+	1008: Contraseña con caracteres insuficientes
+	1009: No se puede borrar o modificar el prestamo debido a que ya aparece como terminado
+	1010: Aun quedan prestamos activos
+	
