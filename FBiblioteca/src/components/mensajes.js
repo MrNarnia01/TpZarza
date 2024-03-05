@@ -9,7 +9,8 @@ export default {
       { id: 1007, texto: 'Usuario con caracteres insuficientes' },
       { id: 1008, texto: 'Contraseña con caracteres insuficientes' },
       { id: 1009, texto: 'No se puede borrar o modificar el prestamo debido a que ya aparece como terminado' },
-      { id: 1010, texto: 'Aun quedan prestamos activos' },
+      { id: 1010, texto: 'Aun quedan prestamos activos' },,
+      { id: 0, texto: 'Prueba' },
       // Agrega más mensajes según sea necesario
     ],
     obtenerMensajePorId(id) {
