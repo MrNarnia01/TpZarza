@@ -98,9 +98,6 @@ public class serviceLibro {
         libro.setPrestamos(null);
         Libro lib = repoL.save(libro);
 
-        for(int i=0; i<generos.size();i++){
-            generos.get(i).setIdL(lib.getlId());
-        }
         List<Genero> gen=repoG.saveAll(generos);
 
         lib.setGeneros(gen);

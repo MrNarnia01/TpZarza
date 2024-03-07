@@ -42,7 +42,6 @@ public class serviceGenero {
 
     public Genero regis(Genero gen){
         Genero gene=repoG.save(gen);
-        repoL.findById(gene.getIdL()).get().setGenero(gene);
         return gene;
     }
 
