@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,7 +27,15 @@ public class servicePrestamo {
         if(presC==null){
             Prestamo pres =new Prestamo();
             pres.setpId(Long.parseLong("-1"));
-            pres.setIdL(Long.parseLong("1001"));
+            Calendar cal = Calendar.getInstance();
+
+            // Establecer la fecha que deseas
+            cal.set(1001, Calendar.MARCH, 7); // Año, mes (enero=0, febrero=1, ...), día
+
+            // Obtener un objeto Date a partir del Calendar
+            Date fechaInicio = cal.getTime();
+
+            pres.setfInicio(fechaInicio);
             return pres;
         }
         return presC;
@@ -35,7 +45,15 @@ public class servicePrestamo {
         if(repoP.findAll().isEmpty()){
             Prestamo pres =new Prestamo();
             pres.setpId(Long.parseLong("-1"));
-            pres.setIdL(Long.parseLong("1001"));
+            Calendar cal = Calendar.getInstance();
+
+            // Establecer la fecha que deseas
+            cal.set(1001, Calendar.MARCH, 7); // Año, mes (enero=0, febrero=1, ...), día
+
+            // Obtener un objeto Date a partir del Calendar
+            Date fechaInicio = cal.getTime();
+
+            pres.setfInicio(fechaInicio);
 
             List<Prestamo> er= new ArrayList<>();
             er.add(pres);
@@ -45,14 +63,24 @@ public class servicePrestamo {
     }
 
     public Prestamo regis(Prestamo pres){
-        if(repoP.searchByEnd(pres.getIdL()).isEmpty()){
+        Long idL=repoP.searchByLib(pres.getpId());
+        if(repoP.searchByEnd(idL).isEmpty()){
             Prestamo pre = repoP.save(pres);
-            repoL.findById(pre.getIdL()).get().setPrestamo(pre);
+            repoL.findById(idL).get().setPrestamo(pre);
             return pre;
         }
         Prestamo pre =new Prestamo();
         pre.setpId(Long.parseLong("-1"));
-        pre.setIdL(Long.parseLong("1010"));
+
+        Calendar cal = Calendar.getInstance();
+
+        // Establecer la fecha que deseas
+        cal.set(1010, Calendar.MARCH, 7); // Año, mes (enero=0, febrero=1, ...), día
+
+        // Obtener un objeto Date a partir del Calendar
+        Date fechaInicio = cal.getTime();
+
+        pre.setfInicio(fechaInicio);
         return pre;
     }
 
@@ -63,11 +91,27 @@ public class servicePrestamo {
                 return repoP.save(pres);
             }
             pre.setpId(Long.parseLong("-1"));
-            pre.setIdL(Long.parseLong("1009"));
+            Calendar cal = Calendar.getInstance();
+
+            // Establecer la fecha que deseas
+            cal.set(1009, Calendar.MARCH, 7); // Año, mes (enero=0, febrero=1, ...), día
+
+            // Obtener un objeto Date a partir del Calendar
+            Date fechaInicio = cal.getTime();
+
+            pre.setfInicio(fechaInicio);
             return pre;
         }
         pre.setpId(Long.parseLong("-1"));
-        pre.setIdL(Long.parseLong("1001"));
+        Calendar cal = Calendar.getInstance();
+
+        // Establecer la fecha que deseas
+        cal.set(1001, Calendar.MARCH, 7); // Año, mes (enero=0, febrero=1, ...), día
+
+        // Obtener un objeto Date a partir del Calendar
+        Date fechaInicio = cal.getTime();
+
+        pre.setfInicio(fechaInicio);
         return pre;
     }
 
@@ -81,7 +125,15 @@ public class servicePrestamo {
             }
         }
         pre.setpId(Long.parseLong("-1"));
-        pre.setIdL(Long.parseLong("1009"));
+        Calendar cal = Calendar.getInstance();
+
+        // Establecer la fecha que deseas
+        cal.set(1009, Calendar.MARCH, 7); // Año, mes (enero=0, febrero=1, ...), día
+
+        // Obtener un objeto Date a partir del Calendar
+        Date fechaInicio = cal.getTime();
+
+        pre.setfInicio(fechaInicio);
         return pre;
     }
 

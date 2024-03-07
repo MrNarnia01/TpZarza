@@ -23,7 +23,7 @@ public class prestamoController {
     public ResponseEntity<?> listarPres(){
         List<Prestamo> listP = serP.lis();
         if(listP.get(0).getpId()==-1){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(listP.get(0).getIdL());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(listP.get(0).getfInicio().getYear()+1900);
         }
         return ResponseEntity.ok(listP);
     }
@@ -32,7 +32,7 @@ public class prestamoController {
     public ResponseEntity<?> bPres(@PathVariable Long id){
         Prestamo pres = serP.busId(id);
         if (pres.getpId()==-1){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getIdL());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getfInicio().getYear()+1900);
         }
         return ResponseEntity.ok(pres);
     }
@@ -41,7 +41,7 @@ public class prestamoController {
     public ResponseEntity<?> regisPres(@RequestBody Prestamo prestamo){
         Prestamo pres=serP.regis(prestamo);
         if(pres.getpId()==-1){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getIdL());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getfInicio().getYear()+1900);
         }
         return ResponseEntity.ok(pres);
     }
@@ -58,7 +58,7 @@ public class prestamoController {
     public ResponseEntity<?> finPres(@RequestBody Prestamo prestamo){
         Prestamo pres = serP.finalizarPres(prestamo);
         if(pres.getpId()==-1){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getIdL());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getfInicio().getYear()+1900);
         }
         return ResponseEntity.ok(pres);
     }
@@ -67,7 +67,7 @@ public class prestamoController {
     public ResponseEntity<?> modPres(@RequestBody Prestamo prestamo){
         Prestamo pres = serP.mod(prestamo);
         if(pres.getpId()==-1){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getIdL());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getfInicio().getYear()+1900);
         }
         return ResponseEntity.ok(pres);
     }
