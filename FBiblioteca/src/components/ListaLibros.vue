@@ -4,6 +4,16 @@
         <button> <RouterLink to="/Main"> Volver al inicio </RouterLink> </button>
         <button> <RouterLink to="/ListaPrestamo"> Listado de prestamos </RouterLink> </button>
         <button> <RouterLink to="/RegisLibro"> Registrar nuevo libro </RouterLink> </button>
+        <select v-model="opS" @change="flibros(opS)">
+            <option value="0">Sin filtros</option>
+            <option value="1">Titulo</option>
+            <option value="2">Autor</option>
+            <option value="3">Genero</option>
+            <option value="4">Fecha de publicacion</option>
+            <option value="5">Publicados entre...</option>
+        </select>
+        <input type="text" v-model="list" @change="flibros(opS)">
+        <button @click="flibros(opS)">Buscar</button>
     </div>
         <table>
             <tr>
@@ -39,6 +49,9 @@ import mensajes from './mensajes';
         data(){
             return{
                 libros: [],
+                opS: 0,
+                list: "",
+                
             };
         },
         mounted(){
@@ -47,9 +60,25 @@ import mensajes from './mensajes';
         methods: {
             async flibros(tip){
                 try {
-                    const response = await axios.get('http://localhost:8080/Libro');
-                    this.libros=response.data;
-                    console.log(this.libros);
+                    if(tip==0){
+                        const response = await axios.get('http://localhost:8080/Libro');
+                        this.libros=response.data;
+                        console.log(this.libros);
+                    }else if(tip==1){
+                        const response = await axios.get('http://localhost:8080/Libro/tit/'+this.list);
+                        this.libros=response.data;
+                        console.log(this.libros);
+                    }else if(tip==2){
+                        const response = await axios.get('http://localhost:8080/Libro/aut/'+this.list);
+                        this.libros=response.data;
+                        console.log(this.libros);
+                    }else if(tip==3){
+                        console.log("Pendiente de hacer");
+                    }else if(tip==4){
+                        console.log("Pendiente de hacer");
+                    }else if(tip==5){
+                        console.log("Pendiente de hacer");
+                    }
                 } catch (error) {
                     this.libros='';
                 }
