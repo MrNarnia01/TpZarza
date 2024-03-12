@@ -72,12 +72,37 @@ public class serviceLibro {
         return repoL.findByTitulo(Titulo);
     }
 
+    public List<Libro> busCantPag(int cantPag){
+        if(repoL.findByCantPag(cantPag).isEmpty()){
+            Libro error= new Libro();
+            error.setCantPag(1002);
+            error.setTitulo("Error");
+            List<Libro> er=new ArrayList<>();
+            er.add(error);
+            return er;
+        }
+        return repoL.findByCantPag(cantPag);
+    }
+
+    public List<Libro> busFep(int fep){
+        if(repoL.searchByFePQueryNative(fep).isEmpty()){
+            Libro error= new Libro();
+            error.setCantPag(1002);
+            error.setTitulo("Error");
+            List<Libro> er=new ArrayList<>();
+            er.add(error);
+            return er;
+        }
+        return repoL.searchByFePQueryNative(fep);
+    }
+
     public Long ultimo(){
         return repoL.searchByIdQueryNative();
     }
 
     public List<Libro> busFec(List<Date> fechas){
-        if(repoL.searchByFecPuQueryNative(fechas.get(0), fechas.get(1)).isEmpty()){
+        String datos="SELECT * FROM Libro WHERE fec_pu BETWEEN '"+ fechas.get(0) +"' AND '"+ fechas.get(1)+"'";
+        if(repoL.searchByFecPuQueryNative(datos).isEmpty()){
             Libro error= new Libro();
             error.setCantPag(1002);
             error.setTitulo("Error");
@@ -85,7 +110,7 @@ public class serviceLibro {
             er.add(error);
             return er;
         }
-        return repoL.searchByFecPuQueryNative(fechas.get(0), fechas.get(1));
+        return repoL.searchByFecPuQueryNative(datos);
     }
 
     public void borrar(Long id) {

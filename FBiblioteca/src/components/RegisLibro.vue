@@ -62,7 +62,6 @@
                 let month = today.getMonth() + 1;
                 month = month < 10 ? '0' + month : month;
                 let day = today.getDate();
-                day =day-1;
                 day = day < 10 ? '0' + day : day;
 
                 // Asignar la fecha actual a la propiedad fechaActual

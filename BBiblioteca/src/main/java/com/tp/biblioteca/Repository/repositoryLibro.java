@@ -10,10 +10,13 @@ import java.util.List;
 
 @Repository
 public interface repositoryLibro extends JpaRepository<Libro, Long> {
+    List<Libro> findByCantPag(int cantPag);
     List<Libro> findByTitulo(String titulo);
     List<Libro> findByAutor(String autor);
     @Query(value="SELECT id FROM Libro ORDER BY id DESC LIMIT 1",nativeQuery = true)
     Long searchByIdQueryNative();
-    @Query(value="SELECT * FROM Libro WHERE fecPu BETWEEN '?1' AND '?2'",nativeQuery = true)
-    List<Libro> searchByFecPuQueryNative(Date f1, Date f2);
+    @Query(value="?1",nativeQuery = true)
+    List<Libro> searchByFecPuQueryNative(String datos);
+    @Query(value="SELECT * FROM Libro WHERE EXTRACT(YEAR FROM fec_pu) = ?1 ",nativeQuery = true)
+    List<Libro> searchByFePQueryNative(int y1);
 }

@@ -5,7 +5,7 @@
     <td> {{ libro.cantPag }} </td>
 
     <td> {{ genUnidos() }} </td>
-        <td> {{ fechaFormateada(libro.fep) }} </td>
+    <td> {{ fechaFormateada(libro.fep) }} </td>
     <td>
         <button>Modificar</button>
     </td>
@@ -52,8 +52,6 @@
             },
             prestado(){
                 const pres=this.libro.prestamos;
-                console.log("prestamos");
-                console.log(pres);
                 for(let i=0; i<pres.lenght;i++){
                     if(pres[i].bFin){
                         return true;

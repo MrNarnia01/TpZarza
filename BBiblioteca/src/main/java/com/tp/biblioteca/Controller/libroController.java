@@ -61,6 +61,24 @@ public class libroController {
         return ResponseEntity.ok(listl);
     }
 
+    @GetMapping("/cant/{pag}")
+    public ResponseEntity<?> libPag(@PathVariable int pag){
+        List<Libro> listl = serL.busCantPag(pag);
+        if (listl.get(0).getTitulo().equals("Error")){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(listl.get(0).getCantPag());
+        }
+        return ResponseEntity.ok(listl);
+    }
+
+    @GetMapping("/fep/{fep}")
+    public ResponseEntity<?> libFep(@PathVariable int fep){
+        List<Libro> listl = serL.busFep(fep);
+        if (listl.get(0).getTitulo().equals("Error")){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(listl.get(0).getCantPag());
+        }
+        return ResponseEntity.ok(listl);
+    }
+
     @GetMapping("/ult")
     public Long ultLibro(){
         return serL.ultimo();

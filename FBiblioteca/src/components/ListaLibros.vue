@@ -4,15 +4,23 @@
         <button> <RouterLink to="/Main"> Volver al inicio </RouterLink> </button>
         <button> <RouterLink to="/ListaPrestamo"> Listado de prestamos </RouterLink> </button>
         <button> <RouterLink to="/RegisLibro"> Registrar nuevo libro </RouterLink> </button>
-        <select v-model="opS" @change="flibros(opS)">
+        <select v-model="opS">
             <option value="0">Sin filtros</option>
             <option value="1">Titulo</option>
             <option value="2">Autor</option>
-            <option value="3">Genero</option>
+            <option value="3">Cantidad de paginas</option>
             <option value="4">Fecha de publicacion</option>
             <option value="5">Publicados entre...</option>
         </select>
-        <input type="text" v-model="list" @change="flibros(opS)">
+<div>
+        <input type="text" v-if="opS >= 1 && opS <= 2" v-model="texto">
+        <input type="number" v-if="opS == 3" v-model="num"  :min="1">
+        <input type="number" v-if="opS == 4" v-model="an" >
+        <input type="date" v-if="opS == 5" v-model="f1" :max="fHoy">
+        <input type="date" v-if="opS == 5" v-model="f2"  :max="fHoy" :min="f1">
+    </div>
+        
+
         <button @click="flibros(opS)">Buscar</button>
     </div>
         <table>
@@ -50,12 +58,31 @@ import mensajes from './mensajes';
             return{
                 libros: [],
                 opS: 0,
-                list: "",
-                
+                texto: "",
+                num: 1,
+                an: 2023,
+                f1: new Date(),
+                f2: new Date(),
+                fHoy:'',
+                fechas: [],
             };
         },
         mounted(){
             this.flibros(0);
+
+            //Obtener la fecha actual en formato YYYY-MM-DD
+                const today = new Date();
+                const year = today.getFullYear();
+                let month = today.getMonth() + 1;
+                month = month < 10 ? '0' + month : month;
+                let day = today.getDate();
+                day =day;
+                day = day < 10 ? '0' + day : day;
+
+                // Asignar la fecha actual a la propiedad fechaActual
+                this.fHoy = `${year}-${month}-${day}`;
+                console.log(this.fHoy);
+
         },
         methods: {
             async flibros(tip){
@@ -65,22 +92,38 @@ import mensajes from './mensajes';
                         this.libros=response.data;
                         console.log(this.libros);
                     }else if(tip==1){
-                        const response = await axios.get('http://localhost:8080/Libro/tit/'+this.list);
+                        const response = await axios.get('http://localhost:8080/Libro/tit/'+this.texto);
                         this.libros=response.data;
                         console.log(this.libros);
                     }else if(tip==2){
-                        const response = await axios.get('http://localhost:8080/Libro/aut/'+this.list);
+                        const response = await axios.get('http://localhost:8080/Libro/aut/'+this.texto);
                         this.libros=response.data;
                         console.log(this.libros);
                     }else if(tip==3){
-                        console.log("Pendiente de hacer");
+                        const response = await axios.get('http://localhost:8080/Libro/cant/'+this.num);
+                        this.libros=response.data;
+                        console.log(this.libros);
                     }else if(tip==4){
-                        console.log("Pendiente de hacer");
-                    }else if(tip==5){
-                        console.log("Pendiente de hacer");
+                        console.log(typeof this.an)
+                        const response = await axios.get('http://localhost:8080/Libro/fep/'+this.an);
+                        this.libros=response.data;
+                        console.log(this.libros);
                     }
                 } catch (error) {
                     this.libros='';
+                    
+                }
+                if(tip==5){
+                    console.log(this.f1)
+                    this.fechas.push(this.f1,this.f2);
+                    axios.post( 'http://localhost:8080/Libro/fec',this.fechas).then(response => {
+                        this.libros=response.data;
+                        console.log(this.libros);
+                    })
+                    .catch(error => {
+                        console.log(error.response.data);
+                        this.libros='';
+                    });
                 }
             },
             elm(id){
@@ -94,7 +137,18 @@ import mensajes from './mensajes';
                     name: 'RegisPrestamo',
                     query: { id:idL }
                 });
-            }
+            },
+            dia(today){
+                today=new Date(today);
+                const year = today.getFullYear();
+                let month = today.getMonth() + 1;
+                month = month < 10 ? '0' + month : month;
+                let day = today.getDate();
+                day = day < 10 ? '0' + day : day;
+
+                // Asignar la fecha actual a la propiedad fechaActual
+                return `${year}-${month}-${day}`;
+            },
         }
     }
 </script>
