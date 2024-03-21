@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -85,7 +86,7 @@ public class libroController {
     }
 
     @PostMapping("/fec")
-    public ResponseEntity<?> fecLib(@RequestBody List<Date> f){
+    public ResponseEntity<?> fecLib(@RequestBody List<String> f) throws ParseException {
         List<Libro> listl = serL.busFec(f);
         if (listl.get(0).getTitulo().equals("Error")){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(listl.get(0).getCantPag());

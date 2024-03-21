@@ -6,10 +6,11 @@ import com.tp.biblioteca.Entity.Prestamo;
 import com.tp.biblioteca.Repository.repositoryGenero;
 import com.tp.biblioteca.Repository.repositoryLibro;
 import com.tp.biblioteca.Repository.repositoryPrestamo;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -100,9 +101,31 @@ public class serviceLibro {
         return repoL.searchByIdQueryNative();
     }
 
-    public List<Libro> busFec(List<Date> fechas){
-        String datos="SELECT * FROM Libro WHERE fec_pu BETWEEN '"+ fechas.get(0) +"' AND '"+ fechas.get(1)+"'";
-        if(repoL.searchByFecPuQueryNative(datos).isEmpty()){
+    public List<Libro> busFec(List<String> fechas) throws ParseException {
+        List<Libro> fec=repoL.findAll();
+        SimpleDateFormat form=new SimpleDateFormat("dd/MM/yyyy");
+        Date f1=form.parse(fechas.get(0));
+        Date f2=form.parse(fechas.get(1));
+        for (int i = 0; i < fec.size(); i++) {
+            if(f1.toInstant().isBefore(fec.get(i).getFep().toInstant())
+                && f2.toInstant().isAfter(fec.get(i).getFep().toInstant()) ){
+
+                System.out.println("Indice correcto: "+i);
+
+            }else{
+                System.out.println(f1);
+                System.out.println(f1.toInstant());
+                System.out.println(f2);
+                System.out.println(f2.toInstant());
+                System.out.println(f1.toInstant().isBefore(fec.get(i).getFep().toInstant()));
+                System.out.println(f2.toInstant().isAfter(fec.get(i).getFep().toInstant()));
+                System.out.println("Indice removido: "+i);
+                fec.remove(i);
+                i--;
+            }
+        }
+
+        if(fec.isEmpty()){
             Libro error= new Libro();
             error.setCantPag(1002);
             error.setTitulo("Error");
@@ -110,7 +133,7 @@ public class serviceLibro {
             er.add(error);
             return er;
         }
-        return repoL.searchByFecPuQueryNative(datos);
+        return fec;
     }
 
     public void borrar(Long id) {

@@ -115,7 +115,9 @@ import mensajes from './mensajes';
                 }
                 if(tip==5){
                     console.log(this.f1)
-                    this.fechas.push(this.f1,this.f2);
+                    console.log(this.dia(this.f1,false))
+                    this.fechas=[];
+                    this.fechas.push(this.dia(this.f1,false),this.dia(this.f2,true));
                     axios.post( 'http://localhost:8080/Libro/fec',this.fechas).then(response => {
                         this.libros=response.data;
                         console.log(this.libros);
@@ -138,16 +140,18 @@ import mensajes from './mensajes';
                     query: { id:idL }
                 });
             },
-            dia(today){
+            dia(today,t){
                 today=new Date(today);
+                console.log(today);
                 const year = today.getFullYear();
                 let month = today.getMonth() + 1;
                 month = month < 10 ? '0' + month : month;
                 let day = today.getDate();
                 day = day < 10 ? '0' + day : day;
-
+                if(t==true)day+=2;
+                
                 // Asignar la fecha actual a la propiedad fechaActual
-                return `${year}-${month}-${day}`;
+                return `${day}/${month}/${year}`;
             },
         }
     }
