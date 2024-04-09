@@ -14,7 +14,7 @@
     <td v-if="this.libro.prestamos==''"><button @click="elm">Eliminar</button></td>
     <td v-else>-</td>
     
-    <td v-if="!prestado()"><button @click="prt">Prestar</button></td>
+    <td v-if="this.estado==0"><button @click="prt">Prestar</button></td>
     <td v-else>-</td>
     
 
@@ -24,6 +24,21 @@
     export default {
         props: {
             libro:Object,
+        },
+        data(){
+            return {
+                estado: 0
+            };
+        },
+        mounted(){
+            const pru=Array.from(this.libro.prestamos)
+            
+            console.log(pru)
+            for(let i=0 ; i < pru.length;i++){
+                if(!pru[i].bFin){
+                    this.estado=1;
+                }
+            }
         },
         methods: {
             elm() {
@@ -49,16 +64,8 @@
                 return valor < 10 ? '0' + valor : valor; // Agregar un cero delante si es menor que 10
             },
             prt(){
+                console.log(this.libro.lId);
                 this.$emit('prestar', this.libro.id)
-            },
-            prestado(){
-                const pres=this.libro.prestamos;
-                for(let i=0; i<pres.lenght;i++){
-                    if(pres[i].bFin){
-                        return true;
-                    }
-                }
-                return false;
             },
         }
     };

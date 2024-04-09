@@ -8,7 +8,7 @@
     <div>
         <form @submit.prevent="crear">
             <label for="lib">Libro: </label>
-            <input type="text" name="lib" id="lib" :placeholder="libro.tit" readonly> 
+            <input type="text" name="lib" id="lib" :placeholder="libro.titulo" readonly> 
 
             <label for="fIni">Fecha prestamo: </label>
             <input type="date" name="fIni" id="fIni" v-model="NewPrestamo.fIni" required :max="fHoy">
@@ -22,17 +22,19 @@
 <script>
     import { RouterLink } from 'vue-router';
     import axios from 'axios';
+    import mensajes from './mensajes';
     export default{
         data(){
             return{
                 NewPrestamo:{
-                    idL: 0,
-                    fIni:new Date(),
+                    fInicio:new Date(),
                     bFin:false,
                     fFin:new Date(),
                 },
                 fHoy:'',
                 libro: Object,
+                id:0,
+                
             };
         },
         mounted() {
@@ -48,32 +50,34 @@
                 // Asignar la fecha actual a la propiedad fechaActual
                 this.fHoy = `${year}-${month}-${day}`;
                 console.log(this.fHoy);
-                console.log(this.$route.query.id);
-                this.NewPrestamo.idL= this.$route.query.id;
-                console.log(this.NewPrestamo);
+                this.id= this.$route.query.id;
                 this.libPres();
+                console.log(typeof(this.id))
         },
         methods: {
             crear(){
-                axios.post( 'http://localhost:8080/Prestamo',this.NewPrestamo ).then(response => {
+                axios.post( 'http://localhost:8080/Prestamo/'+this.id,this.NewPrestamo).then(response => {
                     console.log(this.NewPrestamo);
                     console.log('Prestamo caragado correctamente');
                     this.$router.push('/ListaPrestamo')
 
                 })
                     .catch(error => {
-                    console.error('Error al crear prestamo:', error);
+                        const er=error.response.data;
+                        console.log('Error: ', mensajes.obtenerMensajePorId(er));
+                        window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
                 });
             },
             async libPres(){
                 try {
-                    const response = await axios.get('http://localhost:8080/Libro/id/'+this.NewPrestamo.idL);
+                    const response = await axios.get('http://localhost:8080/Libro/id/'+this.id);
                     console.log(response.data);
                     this.libro=response.data;
                 } catch (error) {
                     console.error('Error al obtener datos:', error);
                 }
             }
+
         }
     }
 </script>

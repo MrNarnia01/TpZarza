@@ -8,10 +8,7 @@ import com.tp.biblioteca.Repository.repositoryPrestamo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class servicePrestamo {
@@ -62,11 +59,12 @@ public class servicePrestamo {
         return repoP.findAll();
     }
 
-    public Prestamo regis(Prestamo pres){
-        Long idL=repoP.searchByLib(pres.getpId());
-        if(repoP.searchByEnd(idL).isEmpty()){
+    public Prestamo regis(Prestamo pres,Long id){
+        if(repoP.searchByEnd(id).isEmpty()){
+            Optional<Libro> lib=repoL.findById(id);
             Prestamo pre = repoP.save(pres);
-            repoL.findById(idL).get().setPrestamo(pre);
+            lib.get().setPrestamo(pre);
+            repoL.save(lib.get());
             return pre;
         }
         Prestamo pre =new Prestamo();
@@ -120,8 +118,8 @@ public class servicePrestamo {
     public Prestamo finalizarPres(Prestamo pres){
         Prestamo pre=repoP.findById(pres.getpId()).orElse(null);
         if(pre!=null){
-            if(pre.isbFin()){
-               return repoP.save(pre);
+            if(!pre.isbFin()){
+               return repoP.save(pres);
             }
         }
         pre.setpId(Long.parseLong("-1"));
@@ -137,5 +135,8 @@ public class servicePrestamo {
         return pre;
     }
 
+    public Long libPrestado(Long id){
+        return repoP.searchByLib(id);
+    }
 
 }
