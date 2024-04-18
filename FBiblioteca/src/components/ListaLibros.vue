@@ -37,7 +37,7 @@
                 <td colspan="6" align="center">No hay libros registrados</td>
             </tr>
             <tr v-for="libro in libros" :key="libro.lId">
-                <Libro :libro="libro" @eliminar="elm(libro.lId)" @prestar="prt(libro.lId)"/>
+                <Libro :libro="libro" @eliminar="elm(libro.lId)" @prestar="prt(libro.lId)" @modificar="mod(libro.lId)"/>
             </tr>
         </table>
 
@@ -129,7 +129,14 @@ import mensajes from './mensajes';
                 }
             },
             elm(id){
-                
+                axios.delete( 'http://localhost:8080/Libro/del/'+id ).then(response => {
+                    this.flibros(0);
+                })
+                    .catch(error => {
+                        const er=error.response.data;
+                      console.log('Error: ', mensajes.obtenerMensajePorId(er));
+                      window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
+                });
             },
             prt(idL){
                 this.$router.push({
@@ -149,6 +156,12 @@ import mensajes from './mensajes';
                 
                 // Asignar la fecha actual a la propiedad fechaActual
                 return `${day}/${month}/${year}`;
+            },
+            mod(idL){
+                this.$router.push({
+                    name: 'ModLibro',
+                    query: { id:idL }
+                });
             },
         }
     }

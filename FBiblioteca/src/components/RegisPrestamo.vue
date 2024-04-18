@@ -11,7 +11,7 @@
             <input type="text" name="lib" id="lib" :placeholder="libro.titulo" readonly> 
 
             <label for="fIni">Fecha prestamo: </label>
-            <input type="date" name="fIni" id="fIni" v-model="NewPrestamo.fIni" required :max="fHoy">
+            <input type="date" name="fIni" id="fIni" v-model="NewPrestamo.fInicio" required :max="fHoy">
 
             <button type="submit">Registrar prestamo</button>
         </form>

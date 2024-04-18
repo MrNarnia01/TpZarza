@@ -15,19 +15,9 @@
             <td colspan="3" align="center">No hay prestamos registrados</td>
         </tr>
         <tr v-for="prestamo in prestamos" :key="prestamo.pId">
-            <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo.pId)"/>
+            <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo)"/>
         </tr>
-    </table><!---
-    <div v-if="this.devol">
-    <form @submit.prevent="diaDev">
-
-        <label for="devF">Fecha devolucion: </label>
-    
-            <input type="date" name="devF" id="devF" v-model="NewPrestamo.fFin" required :max="fHoy">
-            <button type="submit">Registrar devolucion</button>
-
-    </form>
-    </div> -->
+    </table>
 </template>
 
 <script>
@@ -42,14 +32,7 @@
         data(){
             return{
                 prestamos: [],
-                devol: false,
-                NewPrestamo:{
-                    idL: 0,
-                    fIni:new Date(),
-                    bFin:false,
-                    fFin:new Date(),
-                },
-                fhoy: '',
+                prestamo:Object,
             };
         },
         mounted(){
@@ -63,50 +46,42 @@
                 day = day < 10 ? '0' + day : day;
 
                 // Asignar la fecha actual a la propiedad fechaActual
-                this.fHoy = `${year}-${month}-${day}`;
+                this.fHoy = `${day}/${month}/${year}`;
         },
         methods: {
             async fprestamo(){
                 try {
                     const response = await axios.get('http://localhost:8080/Prestamo');
-                    console.log(response.data);
                     this.prestamos=response.data;
                 } catch (error) {
                     const er=error.response.data;
                       console.log('Error: ', mensajes.obtenerMensajePorId(er));
+                    this.prestamos='';
                 }
             },
             elm(id){
-                
-            },
-            fDev(id){
-                this.$router.push({
-                    name: 'FinalizarPrestamo',
-                    query: { id:id }
-                });
-            },
-            async diaDev(){
-                axios.post( 'http://localhost:8080/Prestamo/fec',this.NewPrestamo ).then(response => {
-                    if(response.data){
-                        this.fprestamo;
-                        this.devol=false;
-                    }
-                    else window.alert('Fecha invalida');
-
+                axios.delete( 'http://localhost:8080/Prestamo/'+id ).then(response => {
+                    this.fprestamo();
                 })
                     .catch(error => {
                         const er=error.response.data;
                       console.log('Error: ', mensajes.obtenerMensajePorId(er));
                       window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
                 });
-                /*
-                try {
-                    const response = await axios.get('http://localhost:8080/Prestamo/fec/'+this.idPres+'/'+this.devF);
-                    if(response.data) this.fprestamo;
-                    else window.alert('Fecha invalida');
-                } catch (error) {
-                    
-                }*/
+            },
+            fDev(prestamo){
+                this.prestamo=prestamo;
+                this.prestamo.fFin=new Date();
+                this.prestamo.bFin=true;
+                axios.post( 'http://localhost:8080/Prestamo/fec',this.prestamo ).then(response => {
+                    console.log(response.data);
+                    this.fprestamo();
+                })
+                    .catch(error => {
+                        const er=error.response.data;
+                      console.log('Error: ', mensajes.obtenerMensajePorId(er));
+                      window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
+                });
             }
         }
     }

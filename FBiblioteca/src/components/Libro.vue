@@ -6,16 +6,17 @@
 
     <td> {{ genUnidos() }} </td>
     <td> {{ fechaFormateada(libro.fep) }} </td>
-    <td>
-        <button>Modificar</button>
-    </td>
 
+    <td> 
+        <button @click="mod">Modificar</button> 
+    </td>
     
     <td v-if="this.libro.prestamos==''"><button @click="elm">Eliminar</button></td>
     <td v-else>-</td>
     
     <td v-if="this.estado==0"><button @click="prt">Prestar</button></td>
     <td v-else>-</td>
+
     
 
 </template>
@@ -42,7 +43,7 @@
         },
         methods: {
             elm() {
-                this.$emit('eliminar', this.libro.id)
+                this.$emit('eliminar', this.libro.lId)
             },
             genUnidos() {
                 const allGen = this.libro.generos.map(genero => genero.genero);
@@ -65,8 +66,12 @@
             },
             prt(){
                 console.log(this.libro.lId);
-                this.$emit('prestar', this.libro.id)
+                this.$emit('prestar', this.libro.lId)
             },
+            mod(){
+                console.log(this.libro.lId);
+                this.$emit('modificar', this.libro.lId)
+            }
         }
     };
 

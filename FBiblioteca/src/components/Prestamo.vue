@@ -46,7 +46,7 @@
                 }
             },
             fechaFormateada(f1) {
-                const fecha= new Date(f1);
+                const fecha= new Date(f1.substring(0,10)+"T00:00:00");
                 const dia = fecha.getDate(); // Obtener el día del mes
                 const mes = fecha.getMonth() + 1; // Obtener el mes (los meses van de 0 a 11)
                 const año = fecha.getFullYear(); // Obtener el año
@@ -60,7 +60,7 @@
                 return valor < 10 ? '0' + valor : valor; // Agregar un cero delante si es menor que 10
             },
             fDev() {
-                this.$emit('devo', this.prestamo.pId)
+                this.$emit('devo', this.prestamo)
             },
             async libPres(){
                 try {
