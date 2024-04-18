@@ -153,6 +153,48 @@ public class serviceLibro {
         return repoL.save(lib);
     }
 
+    public Libro mod(Libro libro) {
+        Optional<Libro> lib=repoL.findById(libro.getlId());
+        List<Genero> generos = lib.get().getGeneros();
+        repoL.borrarGen(libro.getlId());
+        repoG.deleteAll(generos);
+        generos = libro.getGeneros();
+
+        List<Genero> gen=repoG.saveAll(generos);
+
+        libro.setGeneros(gen);
+        return repoL.save(libro);
+
+        /*
+        Optional<Libro> lib=repoL.findById(libro.getlId());
+        List<Genero> listLib1=libro.getGeneros();
+        List<Genero> listLib2=lib.get().getGeneros();
+        List<Genero> generosABorrar = new ArrayList<>();
+        for (Genero genero : listLib1) {
+            boolean encontrado = false;
+            for (Genero g : listLib2) {
+                if (genero.getGenero().equals(g.getGenero())) {
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                generosABorrar.add(genero);
+            }
+        }
+
+        for (Genero genero : generosABorrar){
+            repoL.borrarGen(genero.getgId());
+            repoG.deleteById(genero.getgId());
+        }
+
+        List<Genero> gen=repoG.saveAll(listLib1);
+
+        libro.setGeneros(gen);
+
+
+        return repoL.save(libro);*/
+    }
 
     public List<Prestamo> pres(Long id) {
         Libro libro = repoL.findById(id).orElse(null);

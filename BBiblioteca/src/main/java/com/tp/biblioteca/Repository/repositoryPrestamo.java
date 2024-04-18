@@ -1,7 +1,9 @@
 package com.tp.biblioteca.Repository;
 
 import com.tp.biblioteca.Entity.Prestamo;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 
@@ -14,5 +16,12 @@ public interface repositoryPrestamo extends JpaRepository<Prestamo, Long> {
 
     @Query(value="SELECT lp.libro_l_id FROM libro_prestamos AS lp WHERE lp.prestamos_p_id=?1",nativeQuery = true)
     Long searchByLib(Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value="DELETE FROM libro_prestamos AS lp WHERE lp.prestamos_p_id=?1",nativeQuery = true)
+    int borrarPres(Long id);
+
+
 
 }

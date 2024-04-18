@@ -113,7 +113,10 @@ public class servicePrestamo {
         return pre;
     }
 
-    public void borrar(Long id){ repoP.deleteById(id); }
+    public void borrar(Long id){
+        repoP.borrarPres(id);
+        repoP.deleteById(id);
+    }
 
     public Prestamo finalizarPres(Prestamo pres){
         Prestamo pre=repoP.findById(pres.getpId()).orElse(null);
