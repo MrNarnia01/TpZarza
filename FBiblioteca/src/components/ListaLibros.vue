@@ -36,8 +36,8 @@
             <tr v-if="this.libros==''">
                 <td colspan="6" align="center">No hay libros registrados</td>
             </tr>
-            <tr v-for="libro in libros" :key="libro.id">
-                <Libro :libro="libro" @eliminar="elm(libro.id)" @prestar="prt(libro.id)"/>
+            <tr v-for="libro in libros" :key="libro.lId">
+                <Libro :libro="libro" @eliminar="elm(libro.lId)" @prestar="prt(libro.lId)"/>
             </tr>
         </table>
 
@@ -132,9 +132,6 @@ import mensajes from './mensajes';
                 
             },
             prt(idL){
-                const id=parseInt(idL);
-                console.log(typeof(id));
-                
                 this.$router.push({
                     name: 'RegisPrestamo',
                     query: { id:idL }

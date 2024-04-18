@@ -37,9 +37,10 @@ public class prestamoController {
         return ResponseEntity.ok(pres);
     }
 
-    @PostMapping
-    public ResponseEntity<?> regisPres(@RequestBody Prestamo prestamo){
-        Prestamo pres=serP.regis(prestamo);
+    @PostMapping("/{id}")
+    public ResponseEntity<?> regisPres(@PathVariable Long id,@RequestBody Prestamo prestamo){
+        System.out.println(id);
+        Prestamo pres=serP.regis(prestamo,id);
         if(pres.getpId()==-1){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pres.getfInicio().getYear()+1900);
         }
@@ -72,4 +73,9 @@ public class prestamoController {
         return ResponseEntity.ok(pres);
     }
 
+
+    @GetMapping("/lib/{id}")
+    public Long libPres(@PathVariable Long id){
+        return serP.libPrestado(id);
+    }
 }

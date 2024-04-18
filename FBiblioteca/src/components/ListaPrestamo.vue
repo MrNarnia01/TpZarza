@@ -14,10 +14,10 @@
         <tr v-if="this.prestamos==''">
             <td colspan="3" align="center">No hay prestamos registrados</td>
         </tr>
-        <tr v-for="prestamo in prestamos" :key="prestamo.id">
-            <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.id)" @devo="fDev(prestamo.id)"/>
+        <tr v-for="prestamo in prestamos" :key="prestamo.pId">
+            <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo.pId)"/>
         </tr>
-    </table>
+    </table><!---
     <div v-if="this.devol">
     <form @submit.prevent="diaDev">
 
@@ -27,13 +27,14 @@
             <button type="submit">Registrar devolucion</button>
 
     </form>
-    </div>
+    </div> -->
 </template>
 
 <script>
     import { RouterLink } from 'vue-router';
     import axios from 'axios';
     import Prestamo from './Prestamo.vue';
+    import mensajes from './mensajes';
     export default{
         components: {
             Prestamo
@@ -71,16 +72,18 @@
                     console.log(response.data);
                     this.prestamos=response.data;
                 } catch (error) {
-                    
+                    const er=error.response.data;
+                      console.log('Error: ', mensajes.obtenerMensajePorId(er));
                 }
             },
             elm(id){
                 
             },
             fDev(id){
-                this.devol=true;
-                this.NewPrestamo.idL=id;
-                console.log('Llamada hecha');
+                this.$router.push({
+                    name: 'FinalizarPrestamo',
+                    query: { id:id }
+                });
             },
             async diaDev(){
                 axios.post( 'http://localhost:8080/Prestamo/fec',this.NewPrestamo ).then(response => {
@@ -92,7 +95,9 @@
 
                 })
                     .catch(error => {
-                    console.error('Error al crear prestamo:', error);
+                        const er=error.response.data;
+                      console.log('Error: ', mensajes.obtenerMensajePorId(er));
+                      window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
                 });
                 /*
                 try {

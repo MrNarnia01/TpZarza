@@ -99,4 +99,10 @@ public class libroController {
         return serL.regis(libro);
     }
 
+    @PostMapping("/mod")
+    public Libro regisMod(@RequestBody Libro libro){
+        return serL.mod(libro);
+    }
+
+
 }

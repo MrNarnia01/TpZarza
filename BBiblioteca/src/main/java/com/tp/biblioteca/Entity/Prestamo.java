@@ -3,7 +3,6 @@ package com.tp.biblioteca.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="Prestamo")
