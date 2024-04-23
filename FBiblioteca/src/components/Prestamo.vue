@@ -3,15 +3,17 @@
     <td> {{ fechaFormateada(prestamo.fInicio) }} </td>
     <td v-if="prestamo.bFin==false">-</td>
     <td align="center" v-else> {{ fechaFormateada(prestamo.fFin) }} </td>
-    <td>
-        <button>Modificar</button>
+    <td v-if="prestamo.bFin==false">
+        <button @click="mod">Modificar</button>
     </td>
+    <td v-else>-</td>
     <td>
         <button @click="elm">Eliminar</button>
     </td>
     <td v-if="prestamo.bFin==false">
         <button @click="fDev">Devolver</button>
     </td>
+    <td v-else>-</td>
 
 </template>
 <script>
@@ -33,6 +35,9 @@
         methods: {
             elm() {
                 this.$emit('eliminar', this.prestamo.pId)
+            },
+            mod() {
+                this.$emit('modificar', this.prestamo)
             },
             async recLibro(){
                 try {

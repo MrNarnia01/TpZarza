@@ -15,9 +15,16 @@
             <td colspan="3" align="center">No hay prestamos registrados</td>
         </tr>
         <tr v-for="prestamo in prestamos" :key="prestamo.pId">
-            <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo)"/>
+            <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo)" @modificar="mod(prestamo)"/>
         </tr>
     </table>
+    <div v-if="this.modi == 1">
+        <h3>Modificacion de prestamo</h3>
+        <input type="date" v-model="f1" :max="fHoy">
+        <h4>Fecha anterior: {{ fechaFormateada(prestamo.fInicio) }}</h4>
+        <button @click="modi=0">Cancelar</button>
+        <button @click="modif">Modificar</button>
+    </div>
 </template>
 
 <script>
@@ -33,6 +40,9 @@
             return{
                 prestamos: [],
                 prestamo:Object,
+                modi:0,
+                f1: new Date(),
+                fHoy:'',
             };
         },
         mounted(){
@@ -69,6 +79,11 @@
                       window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
                 });
             },
+            mod(prestamo){
+                this.prestamo=prestamo;
+                this.modi=1;
+                console.log(this.modi);
+            },
             fDev(prestamo){
                 this.prestamo=prestamo;
                 this.prestamo.fFin=new Date();
@@ -82,7 +97,34 @@
                       console.log('Error: ', mensajes.obtenerMensajePorId(er));
                       window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
                 });
-            }
+            },
+            fechaFormateada(f1) {
+                const fecha= new Date(f1.substring(0,10)+"T00:00:00");
+                const dia = fecha.getDate(); // Obtener el día del mes
+                const mes = fecha.getMonth() + 1; // Obtener el mes (los meses van de 0 a 11)
+                const año = fecha.getFullYear(); // Obtener el año
+
+                // Formatear la fecha en el formato 'dd/mm/yyyy'
+                const fechaFormateada = `${this.agregarCero(dia)}/${this.agregarCero(mes)}/${año}`;
+
+                return fechaFormateada;
+            },
+            agregarCero(valor) {
+                return valor < 10 ? '0' + valor : valor; // Agregar un cero delante si es menor que 10
+            },
+            modif(){
+                this.prestamo.fInicio=this.f1;
+                axios.post( 'http://localhost:8080/Prestamo/mod',this.prestamo ).then(response => {
+                    console.log(response.data);
+                    this.fprestamo();
+                    this.modi=0;
+                })
+                    .catch(error => {
+                        const er=error.response.data;
+                      console.log('Error: ', mensajes.obtenerMensajePorId(er));
+                      window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
+                });
+            },
         }
     }
 </script>

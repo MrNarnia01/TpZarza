@@ -13,7 +13,9 @@
     methods: {
         inicio(){
           axios.post( 'http://localhost:8080/Usuario/nom',this.Usuario ).then(response => {
+                  this.$emit('usua', this.Usuario)
                   console.log(response.data);
+                  
                   this.$router.push('/Main');
                 })
                     .catch(error => {
