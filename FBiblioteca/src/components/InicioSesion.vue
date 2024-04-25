@@ -13,7 +13,7 @@
     methods: {
         inicio(){
           axios.post( 'http://localhost:8080/Usuario/nom',this.Usuario ).then(response => {
-                  this.$emit('usua', this.Usuario)
+                  this.$emit('usua', response.data)
                   console.log(response.data);
                   
                   this.$router.push('/Main');

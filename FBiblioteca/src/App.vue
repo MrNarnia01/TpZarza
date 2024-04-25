@@ -19,6 +19,20 @@ export default {
       console.log("Prueba");
         this.usuario=usuario;
         this.usu=1;
+    },
+    infoUsuario(){
+      console.log(this.usuario);
+      this.$router.push({
+        name: 'ModUsuario',
+        query: { 
+          nU:this.usuario.nU,
+          con:this.usuario.con,
+          uId:this.usuario.uId
+         }
+      });
+    },
+    nulear(){
+      this.usuario=null;
     }
   }
 }
@@ -31,9 +45,10 @@ export default {
   <div v-else>
     <h1>
         Usuario {{ this.usuario.nU }} conectado
+        <button @click="infoUsuario" >Configuracion</button>
     </h1>
     </div>
-  <RouterView @usua="recibirUsuario" ></RouterView>
+  <RouterView @usua="recibirUsuario" @mod="nulear"></RouterView>
 </template>
 
 <style scoped>

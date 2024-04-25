@@ -15,12 +15,12 @@ public class serviceUsuario {
     @Autowired
     private repositoryUsuario repoU;
 
-    public void borrar(String nom) {
+    public void borrar(Long nom) {
         repoU.deleteById(nom);
     }
 
     public Usuario regis(Usuario usu) {
-        Usuario us = repoU.findById(usu.getnU()).orElse(null);
+        Usuario us = repoU.findBynU(usu.getnU());
         if(us==null){
             if(usu.getnU().length()<8) {
                 us = new Usuario();
@@ -57,7 +57,7 @@ public class serviceUsuario {
     }
 
     public Usuario inicioSesion(Usuario usu){
-        Usuario us=repoU.findById(usu.getnU()).orElse(null);
+        Usuario us = repoU.findBynU(usu.getnU());
         if(us==null){
             us=new Usuario();
             us.setnU("Error");
@@ -74,5 +74,23 @@ public class serviceUsuario {
         }
 
     }
+    public Usuario modificar(Usuario usu) {
+       if(usu.getnU().length()<8) {
+                Usuario us = new Usuario();
+                us.setnU("Error");
+                us.setCon("1007");
+                return us;
+       }
+       if(usu.getCon().length()<8) {
+                Usuario us = new Usuario();
+                us.setnU("Error");
+                us.setCon("1008");
+                return us;
+       }
+       return repoU.save(usu);
+
+    }
+
+
 
 }

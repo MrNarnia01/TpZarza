@@ -7,6 +7,9 @@ import jakarta.persistence.*;
 public class Usuario{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long uId;
+
     @Column(name="nombreUsuario")
     private String nU;
 
@@ -29,4 +32,11 @@ public class Usuario{
         this.nU = nU;
     }
 
+    public Long getuId() {
+        return uId;
+    }
+
+    public void setuId(Long uId) {
+        this.uId = uId;
+    }
 }

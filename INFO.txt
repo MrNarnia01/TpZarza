@@ -28,4 +28,3 @@ Codigos Error:
 	1008: Contraseña con caracteres insuficientes
 	1009: No se puede borrar o modificar el prestamo debido a que ya aparece como terminado
 	1010: Aun quedan prestamos activos
-	
