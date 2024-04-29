@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface repositoryLibro extends JpaRepository<Libro, Long> {
+public interface    repositoryLibro extends JpaRepository<Libro, Long> {
     List<Libro> findByCantPag(int cantPag);
     List<Libro> findByTitulo(String titulo);
     List<Libro> findByAutor(String autor);
