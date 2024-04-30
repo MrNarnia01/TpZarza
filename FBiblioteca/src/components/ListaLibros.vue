@@ -12,7 +12,7 @@
             <option value="4">Fecha de publicacion</option>
             <option value="5">Publicados entre...</option>
         </select>
-<div>
+    <div>
         <input type="text" v-if="opS >= 1 && opS <= 2" v-model="texto">
         <input type="number" v-if="opS == 3" v-model="num"  :min="1">
         <input type="number" v-if="opS == 4" v-model="an" >

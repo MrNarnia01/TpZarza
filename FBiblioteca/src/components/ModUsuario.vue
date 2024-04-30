@@ -1,6 +1,6 @@
 <template>
     <h1>Configuracion del Usuario: {{ this.usuario.nU }}</h1>
-    <button>Borrar usuario</button>
+    <button @click="elm">Borrar usuario</button>
     <button @click="mod">Modificar usuario</button>
     <div v-if="modi!=0">
         <table>
@@ -54,9 +54,17 @@ export default{
                       window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
                 }); 
             },
-            
-            
-
+            elm(){
+                axios.delete( 'http://localhost:8080/Usuario/del/'+this.usuario.uId ).then(response => {
+                    this.$emit('mod');
+                    this.$router.push('/InicioSesion');
+                })
+                    .catch(error => {
+                        const er=error.response.data;
+                      console.log('Error: ', mensajes.obtenerMensajePorId(er));
+                      window.alert('Error: '+ mensajes.obtenerMensajePorId(er));
+                });
+            },
         }
     }
 </script>
