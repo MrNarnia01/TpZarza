@@ -1,15 +1,13 @@
 package com.tp.biblioteca.Controller;
 
-import com.tp.biblioteca.Entity.Genero;
 import com.tp.biblioteca.Entity.Prestamo;
-import com.tp.biblioteca.Repository.repositoryPrestamo;
-import com.tp.biblioteca.Service.serviceLibro;
 import com.tp.biblioteca.Service.servicePrestamo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @CrossOrigin
@@ -77,5 +75,14 @@ public class prestamoController {
     @GetMapping("/lib/{id}")
     public Long libPres(@PathVariable Long id){
         return serP.libPrestado(id);
+    }
+
+    @PostMapping("/fecha")
+    public ResponseEntity<?> busFecPres(@RequestBody List<String> f) throws ParseException {
+        List<Prestamo> listp = serP.presFec(f);
+        if (listp.get(0).getpId()==-1){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(listp.get(0).getfInicio().getYear()+1900);
+        }
+        return ResponseEntity.ok(listp);
     }
 }
