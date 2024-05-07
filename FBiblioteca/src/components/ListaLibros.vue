@@ -1,10 +1,17 @@
 <template>
     <div>
-        <h1>Listado de libros</h1>
-        <button> <RouterLink to="/Main"> Volver al inicio </RouterLink> </button>
-        <button> <RouterLink to="/ListaPrestamo"> Listado de prestamos </RouterLink> </button>
-        <button> <RouterLink to="/RegisLibro"> Registrar nuevo libro </RouterLink> </button>
-        <select v-model="opS">
+        
+
+        <div class="opciones">
+            <h1>Listado de libros</h1>
+            <nav>
+                <ul>
+                    
+        <li class="boton"> <RouterLink to="/Main"> Volver al inicio </RouterLink> </li>
+        <li class="boton"> <RouterLink to="/ListaPrestamo"> Listado de prestamos </RouterLink> </li>
+        <li class="boton"> <RouterLink to="/RegisLibro"> Registrar nuevo libro </RouterLink> </li>
+        <li>
+            <select v-model="opS">
             <option value="0">Sin filtros</option>
             <option value="1">Titulo</option>
             <option value="2">Autor</option>
@@ -12,16 +19,24 @@
             <option value="4">Fecha de publicacion</option>
             <option value="5">Publicados entre...</option>
         </select>
-    <div>
+        </li>
+        <li class="boton" @click="flibros(opS)">
+            Buscar
+        </li>
+                </ul>
+            </nav>
+        
+
+    
         <input type="text" v-if="opS >= 1 && opS <= 2" v-model="texto">
         <input type="number" v-if="opS == 3" v-model="num"  :min="1">
         <input type="number" v-if="opS == 4" v-model="an" >
         <input type="date" v-if="opS == 5" v-model="f1" :max="fHoy">
         <input type="date" v-if="opS == 5" v-model="f2"  :max="fHoy" :min="f1">
+   
     </div>
-        
+    
 
-        <button @click="flibros(opS)">Buscar</button>
     </div>
         <table>
             <tr>
@@ -34,7 +49,7 @@
                 <th colspan="3"></th>
             </tr>
             <tr v-if="this.libros==''">
-                <td colspan="6" align="center">No hay libros registrados</td>
+                <td colspan="6">No hay libros registrados</td>
             </tr>
             <tr v-for="libro in libros" :key="libro.lId">
                 <Libro :libro="libro" @eliminar="elm(libro.lId)" @prestar="prt(libro.lId)" @modificar="mod(libro.lId)"/>

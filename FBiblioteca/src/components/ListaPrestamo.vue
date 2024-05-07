@@ -26,10 +26,10 @@
             <th>Libro</th>
             <th>Fecha prestado</th>
             <th>Fecha devolucion</th>
-            <th colspan="2"></th>
+            <th colspan="3"></th>
         </tr>
         <tr v-if="this.prestamos==''">
-            <td colspan="3" align="center">No hay prestamos registrados</td>
+            <td colspan="3" >No hay prestamos registrados</td>
         </tr>
         <tr v-for="prestamo in prestamos" :key="prestamo.pId">
             <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo)" @modificar="mod(prestamo)"/>
@@ -79,7 +79,8 @@
                 day = day < 10 ? '0' + day : day;
 
                 // Asignar la fecha actual a la propiedad fechaActual
-                this.fHoy = `${day}/${month}/${year}`;
+                this.fHoy = `${year}-${month}-${day}`;
+                console.log(this.fHoy);
                 this.libr();
                 
         },

@@ -46,14 +46,31 @@
 <template>
   <h1>Inicio de sesion</h1>
   <form @submit.prevent="inicio()">
-    <label for="nU">Nombre de usuario </label>
-    <input type="text" name="nU" id="nU" v-model="Usuario.nU" required>
-    <label for="con">Contraseña </label>
-    <input type="password" name="con" id="con" v-model="Usuario.con" required>
-
-    <button type="submit">Iniciar Sesion</button>
+      <table>
+        <tr>
+          <td>
+            <label for="nU">Nombre de usuario </label>
+          </td>
+          <td>
+            <input type="text" name="nU" id="nU" v-model="Usuario.nU" required>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <label for="con">Contraseña </label>
+          </td>
+          <td>
+            <input type="password" name="con" id="con" v-model="Usuario.con" required>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <button type="submit">Iniciar Sesion</button>
+            <button @click="crear()">Crear Cuenta</button>
+          </td>
+        </tr>
+      </table>
   </form>
-  <button @click="crear()">Crear Cuenta</button>
 </template>
 
 <style scoped>

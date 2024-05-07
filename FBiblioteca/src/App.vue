@@ -32,6 +32,7 @@ export default {
       });
     },
     nulear(){
+      this.$router.push('/InicioSesion');
       this.usuario=null;
     }
   }
@@ -39,15 +40,25 @@ export default {
 </script>
 
 <template>
-  <div v-if="usuario == null" @usua="recibirUsuario"> 
-    <h1> Sin sesion activa </h1>
-  </div>
-  <div v-else>
-    <h1>
-        Usuario {{ this.usuario.nU }} conectado
-        <button @click="infoUsuario" >Configuracion</button>
-    </h1>
+  <header>
+    <div v-if="usuario == null" @usua="recibirUsuario"> 
+      <h1> Sin sesion activa </h1>
     </div>
+    <div v-else>
+      <div class="opciones">
+          <h1>
+          <nav>
+            <ul>
+              <li >Usuario {{ this.usuario.nU }} conectado</li>
+              <li class="boton" @click="infoUsuario"> Configuracion </li>
+              <li class="boton" @click="nulear"> Cerrar Sesion </li>
+            </ul>
+          </nav>
+        </h1>
+        </div>
+    </div>
+  </header>
+  
   <RouterView @usua="recibirUsuario" @mod="nulear"></RouterView>
 </template>
 
