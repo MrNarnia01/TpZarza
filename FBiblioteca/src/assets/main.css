@@ -1,3 +1,4 @@
+/*
 button{
   margin: 5px;
 }
@@ -42,3 +43,50 @@ nav ul li {
 .boton:hover {
   background: rgba(255, 255, 255, 0.7);
 }
+
+*/
+
+
+
+body {
+	margin: 0;
+	padding: 0;
+  background-image: url('../components/imagenes/biblioteca.jpg');
+  background-size: cover;
+  font-family: sans-serif;
+  text-align: center;
+}
+
+
+
+/*
+ * Navegación
+ */
+	
+    nav ul {
+      padding: 0px;
+      margin: 0px;
+    }
+
+			
+			nav ul li{
+        float:left;
+        padding:15px 15px;
+				display: block;
+			}
+			
+      .boton:hover {
+        background: coral;
+        color: #333;
+      }
+				
+
+          header {
+            background: #333;
+            color: white;
+            
+            width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+            left: 0; /* Posicionamos la cabecera al lado izquierdo */
+            top: 0; /* Posicionamos la cabecera pegada arriba */
+            position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+          }

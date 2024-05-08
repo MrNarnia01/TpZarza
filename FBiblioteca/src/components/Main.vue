@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router';
 </script>
 <template>
     <h1>Bienvenido a la biblioteca</h1>
-    <header>
+    
         <div class="opciones">
             <nav>
                 <ul>
@@ -13,7 +13,6 @@ import { RouterLink } from 'vue-router';
                 </ul>
             </nav>
         </div>
-    </header>
     
 </template>
 

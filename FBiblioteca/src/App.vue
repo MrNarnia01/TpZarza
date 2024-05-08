@@ -42,19 +42,22 @@ export default {
 <template>
   <header>
     <div v-if="usuario == null" @usua="recibirUsuario" class="opciones"> 
-      <h1> Sin sesion activa </h1>
+      <nav>
+        <ul>
+          <li>Sin sesion activa
+          </li>
+        </ul>
+      </nav>
     </div>
     <div v-else>
-      <div class="opciones">
-          <h1>
+      <div>
           <nav>
             <ul>
               <li >Usuario {{ this.usuario.nU }} conectado</li>
-              <li class="boton" @click="infoUsuario"> Configuracion </li>
-              <li class="boton" @click="nulear"> Cerrar Sesion </li>
+              <li @click="infoUsuario" class="boton"> Configuracion </li>
+              <li @click="nulear" class="boton"> Cerrar Sesion </li>
             </ul>
           </nav>
-        </h1>
         </div>
     </div>
   </header>
