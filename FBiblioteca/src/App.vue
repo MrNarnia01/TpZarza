@@ -41,7 +41,7 @@ export default {
 
 <template>
   <header>
-    <div v-if="usuario == null" @usua="recibirUsuario"> 
+    <div v-if="usuario == null" @usua="recibirUsuario" class="opciones"> 
       <h1> Sin sesion activa </h1>
     </div>
     <div v-else>
