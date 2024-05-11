@@ -7,14 +7,14 @@
     <td> {{ genUnidos() }} </td>
     <td> {{ fechaFormateada(libro.fep) }} </td>
 
-    <td> 
-        <button @click="mod">Modificar</button> 
+    <td @click="mod" class="boton"> 
+        Modificar
     </td>
     
-    <td v-if="this.libro.prestamos==''"><button @click="elm">Eliminar</button></td>
+    <td v-if="this.libro.prestamos==''" class="boton" @click="elm">Eliminar</td>
     <td v-else>-</td>
     
-    <td v-if="this.estado==0"><button @click="prt">Prestar</button></td>
+    <td v-if="this.estado==0" class="boton" @click="prt" >Prestar</td>
     <td v-else>-</td>
 
     

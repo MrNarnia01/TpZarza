@@ -1,21 +1,7 @@
 /*
-button{
-  margin: 5px;
-}
 
-tr,td,th{
-  background-color: rgba(255, 255, 255, 0.2);
-  padding: 10px;
-  backdrop-filter: blur(2px);
 
-}
 
-table{
-  padding: 10px;
-  border-spacing: 10px;
-  backdrop-filter: blur(5px);
-  margin: auto;
-}
 
 
 body{
@@ -75,18 +61,58 @@ body {
 				display: block;
 			}
 			
-      .boton:hover {
+      .bot:hover {
         background: coral;
         color: #333;
       }
 				
 
-          header {
-            background: #333;
-            color: white;
+      header {
+        background: #333;
+        color: white;
             
-            width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
-            left: 0; /* Posicionamos la cabecera al lado izquierdo */
-            top: 0; /* Posicionamos la cabecera pegada arriba */
-            position: fixed; /* Hacemos que la cabecera tenga una posición fija */
-          }
+        width: 100%; /* hacemos que la cabecera ocupe el ancho completo de la página */
+        left: 0; /* Posicionamos la cabecera al lado izquierdo */
+        top: 0; /* Posicionamos la cabecera pegada arriba */
+        position: fixed; /* Hacemos que la cabecera tenga una posición fija */
+      }
+
+      table{
+        padding: 10px;
+        border-spacing: 10px;
+        backdrop-filter: blur(5px);
+        margin: auto;
+      }
+
+      button, input{
+        margin: 5px;
+      }
+      
+      tr,td,th{
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 10px;
+        backdrop-filter: blur(2px);
+      
+      }
+
+      .router-link {
+        text-decoration: none; /* Elimina la decoración de subrayado */
+        color: inherit; /* Utiliza el color heredado del elemento contenedor */
+        cursor: pointer; /* Cambia el cursor para indicar que es interactivo */
+      }
+
+      .noh{
+        margin-top: 100px;
+      }
+      
+      .boton:hover{
+        background-color: #333;
+        color: white;
+      }
+
+
+
+
+
+
+

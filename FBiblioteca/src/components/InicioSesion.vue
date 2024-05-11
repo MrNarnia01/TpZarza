@@ -44,9 +44,12 @@
 </script>
 
 <template>
-  <h1>Inicio de sesion</h1>
+  
   <form @submit.prevent="inicio()">
       <table>
+        <tr>
+          <td colspan="2"><h1>Inicio de sesion</h1></td>
+        </tr>
         <tr>
           <td>
             <label for="nU">Nombre de usuario </label>

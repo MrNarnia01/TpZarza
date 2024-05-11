@@ -50,19 +50,18 @@ export default {
       </nav>
     </div>
     <div v-else>
-      <div>
           <nav>
             <ul>
               <li >Usuario {{ this.usuario.nU }} conectado</li>
-              <li @click="infoUsuario" class="boton"> Configuracion </li>
-              <li @click="nulear" class="boton"> Cerrar Sesion </li>
+              <li @click="infoUsuario" class="bot"> Configuracion </li>
+              <li @click="nulear" class="bot"> Cerrar Sesion </li>
             </ul>
           </nav>
-        </div>
     </div>
   </header>
-  
-  <RouterView @usua="recibirUsuario" @mod="nulear"></RouterView>
+  <div class="noh">
+    <RouterView @usua="recibirUsuario" @mod="nulear"></RouterView>
+  </div>
 </template>
 
 <style scoped>

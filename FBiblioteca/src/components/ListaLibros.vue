@@ -1,44 +1,39 @@
 <template>
-    <div>
-        
-
-        <div class="opciones">
-            <h1>Listado de libros</h1>
-            <nav>
-                <ul>
-                    
-        <li class="boton"> <RouterLink to="/Main"> Volver al inicio </RouterLink> </li>
-        <li class="boton"> <RouterLink to="/ListaPrestamo"> Listado de prestamos </RouterLink> </li>
-        <li class="boton"> <RouterLink to="/RegisLibro"> Registrar nuevo libro </RouterLink> </li>
-        <li>
-            <select v-model="opS">
-            <option value="0">Sin filtros</option>
-            <option value="1">Titulo</option>
-            <option value="2">Autor</option>
-            <option value="3">Cantidad de paginas</option>
-            <option value="4">Fecha de publicacion</option>
-            <option value="5">Publicados entre...</option>
-        </select>
-        </li>
-        <li class="boton" @click="flibros(opS)">
-            Buscar
-        </li>
-                </ul>
-            </nav>
-        
-
     
-        <input type="text" v-if="opS >= 1 && opS <= 2" v-model="texto">
-        <input type="number" v-if="opS == 3" v-model="num"  :min="1">
-        <input type="number" v-if="opS == 4" v-model="an" >
-        <input type="date" v-if="opS == 5" v-model="f1" :max="fHoy">
-        <input type="date" v-if="opS == 5" v-model="f2"  :max="fHoy" :min="f1">
-   
-    </div>
-    
-
-    </div>
         <table>
+            <tr>    
+                <td colspan="9"> <h1>Listado de libros</h1> </td>
+            </tr>
+            <tr>
+                <td class="boton" colspan="2"><RouterLink to="/Main" class="router-link"> Volver al inicio </RouterLink></td>
+                <td class="boton" colspan="2"> <RouterLink to="/ListaPrestamo" class="router-link"> Listado de prestamos </RouterLink></td>
+                <td class="boton" colspan="2"> <RouterLink to="/RegisLibro" class="router-link"> Registrar nuevo libro </RouterLink></td>
+                <td colspan="3">
+                    <select v-model="opS">
+                        <option value="0">Sin filtros</option>
+                        <option value="1">Titulo</option>
+                        <option value="2">Autor</option>
+                        <option value="3">Cantidad de paginas</option>
+                        <option value="4">Fecha de publicacion</option>
+                        <option value="5">Publicados entre...</option>
+                    </select>
+                </td>
+            </tr>
+            <tr v-if="opS == 0">
+                <td colspan="9"></td>
+            </tr>
+            <tr v-else>
+                <td colspan="8">
+                    <input type="text" v-if="opS >= 1 && opS <= 2" v-model="texto">
+                    <input type="number" v-if="opS == 3" v-model="num"  :min="1">
+                    <input type="number" v-if="opS == 4" v-model="an" >
+                    <input type="date" v-if="opS == 5" v-model="f1" :max="fHoy">
+                    <input type="date" v-if="opS == 5" v-model="f2"  :max="fHoy" :min="f1">
+                </td>
+                <td class="boton" @click="flibros(opS)">
+                    Buscar
+                </td>
+            </tr>
             <tr>
                 <th>Titulo</th>
                 <th>Autor</th>
@@ -49,7 +44,7 @@
                 <th colspan="3"></th>
             </tr>
             <tr v-if="this.libros==''">
-                <td colspan="6">No hay libros registrados</td>
+                <td colspan="9">No hay libros registrados</td>
             </tr>
             <tr v-for="libro in libros" :key="libro.lId">
                 <Libro :libro="libro" @eliminar="elm(libro.lId)" @prestar="prt(libro.lId)" @modificar="mod(libro.lId)"/>
