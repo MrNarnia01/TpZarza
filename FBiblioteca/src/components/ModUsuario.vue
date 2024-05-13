@@ -1,7 +1,19 @@
 <template>
-    <h1>Configuracion del Usuario: {{ this.usuario.nU }}</h1>
-    <button @click="elm">Borrar usuario</button>
-    <button @click="mod">Modificar usuario</button>
+    <table>
+        <tr>
+            <td colspan="2"><h1>Configuracion del Usuario: {{ this.usuario.nU }}</h1></td>
+        </tr>
+        <tr>
+            <td @click="elm" class="boton">Borrar usuario</td>
+            <td @click="mod" class="boton">Modificar usuario</td>
+        </tr>
+        <tr>
+            <th colspan="2" class="boton">
+                <RouterLink to="/Main" class="router-link">Volver al inicio</RouterLink>
+            </th>
+        </tr>
+    </table>
+
     <div v-if="modi!=0">
         <table>
             <tr>
@@ -13,7 +25,7 @@
                 <td><input type="password" name="cont" id="cont" v-model="usuario.con"></td>
             </tr>
             <tr>
-                <td><button @click="modificar">Modificar</button></td>
+                <td colspan="2"><button @click="modificar">Modificar</button></td>
             </tr>
         </table>
     </div>

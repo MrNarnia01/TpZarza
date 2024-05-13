@@ -1,27 +1,39 @@
 <template>
-    <div>
-        <h1>Listado de prestamos</h1>
-        <button> <RouterLink to="/Main"> Volver al inicio </RouterLink> </button>
-        <button> <RouterLink to="/ListaLibros"> Listado de libros </RouterLink> </button>
-        <select v-model="opS" @change="fprestamo(opS)">
-            <option value="0">Sin filtros</option>
-            <option value="1">Prestados entre...</option>
-            <option value="2">Por libro</option>
-        </select>
-
-        <div>
-            <input type="date" v-if="opS == 1" v-model="f1" :max="fHoy">
-            <input type="date" v-if="opS == 1" v-model="f2"  :max="fHoy" :min="f1">
-            <select v-model="lib" id="libros" v-if="opS == 2">
-                <option v-for="libro in listaLibros" :value="libro.lId" :key="libro.lId">{{ libro.titulo }}</option>
-            </select>
-        </div>
+    <table>
+        <tr>
+            <td colspan="6">
+                <h1>Listado de prestamos</h1>
+            </td>
+        </tr>
+        <tr>
+            <td class="boton" colspan="2"> <RouterLink to="/Main" class="router-link"> Volver al inicio </RouterLink> </td>
+            <td class="boton" colspan="2"> <RouterLink to="/ListaLibros" class="router-link"> Listado de libros </RouterLink> </td>
+            <td colspan="2">
+                <select v-model="opS" @change="fprestamo(opS)">
+                    <option value="0">Sin filtros</option>
+                    <option value="1">Prestados entre...</option>
+                    <option value="2">Por libro</option>
+                </select>
+            </td>
+            
+        </tr>
+        
+        <tr v-if="opS == 0">
+                <td colspan="6"></td>
+        </tr>
+        <tr v-else>
+            <td colspan="5">
+                <input type="date" v-if="opS == 1" v-model="f1" :max="fHoy">
+                <input type="date" v-if="opS == 1" v-model="f2"  :max="fHoy" :min="f1">
+                <select v-model="lib" id="libros" v-if="opS == 2">
+                    <option v-for="libro in listaLibros" :value="libro.lId" :key="libro.lId">{{ libro.titulo }}</option>
+                </select>
+            </td>
+            <td class="boton" @click="fprestamo(opS)">Buscar</td>
+        </tr>
         
 
-        <button @click="fprestamo(opS)">Buscar</button>
-
-    </div>
-    <table>
+    
         <tr>
             <th>Libro</th>
             <th>Fecha prestado</th>
@@ -29,7 +41,7 @@
             <th colspan="3"></th>
         </tr>
         <tr v-if="this.prestamos==''">
-            <td colspan="3" >No hay prestamos registrados</td>
+            <td colspan="6" >No hay prestamos registrados</td>
         </tr>
         <tr v-for="prestamo in prestamos" :key="prestamo.pId">
             <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo)" @modificar="mod(prestamo)"/>
