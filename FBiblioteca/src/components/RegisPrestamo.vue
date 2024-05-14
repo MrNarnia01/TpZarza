@@ -1,22 +1,30 @@
 <template>
-    <div>
-        <h1>Registro de prestamo</h1>
-        <button> <RouterLink to="/Main"> Volver al inicio </RouterLink> </button>
-        <button> <RouterLink to="/ListaLibros"> Listado libros </RouterLink> </button>
-        <button> <RouterLink to="/ListaPrestamo"> Listado prestamos </RouterLink> </button>
-    </div>
-    <div>
-        <form @submit.prevent="crear">
-            <label for="lib">Libro: </label>
-            <input type="text" name="lib" id="lib" :placeholder="libro.titulo" readonly> 
+    <form @submit.prevent="crear">
+        <table>
+            <tr>
+                <td colspan="3"><h1>Registro de prestamo</h1></td>
+            </tr>
 
-            <label for="fIni">Fecha prestamo: </label>
-            <input type="date" name="fIni" id="fIni" v-model="NewPrestamo.fInicio" required :max="fHoy">
-
-            <button type="submit">Registrar prestamo</button>
-        </form>
-    </div>
-
+            <tr>
+                <td class="boton"><RouterLink to="/Main" class="router-link"> Volver al inicio </RouterLink></td>
+                <td class="boton"> <RouterLink to="/ListaLibros" class="router-link"> Listado libros </RouterLink> </td>
+                <td class="boton"> <RouterLink to="/ListaPrestamo" class="router-link"> Listado prestamos </RouterLink> </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <label for="lib">Libro: </label>
+                    <input type="text" name="lib" id="lib" :placeholder="libro.titulo" readonly> 
+                </td>
+                <td>
+                    <label for="fIni">Fecha prestamo: </label>
+                    <input type="date" name="fIni" id="fIni" v-model="NewPrestamo.fInicio" required :max="fHoy">
+                </td>
+                <td><button type="submit">Registrar prestamo</button></td>
+            </tr>
+            
+        </table>
+    </form>
 </template>
 
 <script>
@@ -44,7 +52,7 @@
                 let month = today.getMonth() + 1;
                 month = month < 10 ? '0' + month : month;
                 let day = today.getDate();
-                day =day-1;
+                day =day;
                 day = day < 10 ? '0' + day : day;
 
                 // Asignar la fecha actual a la propiedad fechaActual

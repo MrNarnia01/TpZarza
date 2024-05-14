@@ -47,13 +47,20 @@
             <Prestamo :prestamo="prestamo" @eliminar="elm(prestamo.pId)" @devo="fDev(prestamo)" @modificar="mod(prestamo)"/>
         </tr>
     </table>
-    <div v-if="this.modi == 1">
-        <h3>Modificacion de prestamo</h3>
-        <input type="date" v-model="f3" :max="fHoy">
-        <h4>Fecha anterior: {{ fechaFormateada(prestamo.fInicio) }}</h4>
-        <button @click="modi=0">Cancelar</button>
-        <button @click="modif">Modificar</button>
-    </div>
+    <table v-if="this.modi == 1">
+        <tr><th colspan="2">Modificacion de prestamo</th></tr>
+        <tr>
+            <td><input type="date" v-model="f3" :max="fHoy"></td>
+            <th>Fecha anterior: {{ fechaFormateada(prestamo.fInicio) }}</th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button @click="modi=0">Cancelar</button>
+                <button @click="modif">Modificar</button>
+            </td>
+        </tr>
+        
+    </table>
 </template>
 
 <script>

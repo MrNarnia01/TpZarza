@@ -1,36 +1,70 @@
 <template>
-    <div>
-        <h1>Modificar de libro</h1>
-        <button> <RouterLink to="/Main"> Volver al inicio </RouterLink> </button>
-        <button> <RouterLink to="/ListaLibros"> Listado de libros </RouterLink> </button>
-    </div>
+        
+        
+        
+    
     <form @submit.prevent="modificar">
-        <label for="tit">Titulo: </label>
-        <input type="text" name="tit" id="tit" v-model="libro.titulo"  required>
 
-        <label for="aut">Autor: </label>
-        <input type="text" name="aut" id="aut" v-model="libro.autor"  required>
+        <table>
+            <tr>
+                <td colspan="2"><h1>Modificar de libro</h1></td>
+            </tr>
 
-        <label for="sin">Sinopsis: </label>
-        <input type="text" name="sin" id="sin" v-model="libro.sinopsis"  required>
+            <tr>
+                <td class="boton"><RouterLink to="/Main" class="router-link"> Volver al inicio </RouterLink></td>
+                <td class="boton"><RouterLink to="/ListaLibros" class="router-link"> Listado de libros </RouterLink></td>
+            </tr>
 
-        <label for="cap">Paginas: </label>
-        <input type="number" name="cap" id="cap" v-model="libro.cantPag" required min="1" >
+            <tr>
+                <td>
+                    <label for="tit">Titulo: </label>
+                    <input type="text" name="tit" id="tit" v-model="libro.titulo"  required>
+                </td>
+                <td>
+                    <label for="aut">Autor: </label>
+                    <input type="text" name="aut" id="aut" v-model="libro.autor"  required>
+                </td>
+            </tr>
 
-        <label for="fep">Fecha de publicacion: </label>
-        <input type="date" name="fep" id="fep" v-model="libro.fep" required :max="fHoy">
-        <div>Fecha anterior: {{ dia()}}</div>
+            <tr>
+                <td>
+                    <label for="sin">Sinopsis: </label>
+                    <input type="text" name="sin" id="sin" v-model="libro.sinopsis"  required>
+                </td>
+                <td>
+                    <label for="cap">Paginas: </label>
+                    <input type="number" name="cap" id="cap" v-model="libro.cantPag" required min="1" >
+                </td>
+            </tr>
 
-        <div v-for="(input, index) in inputs" :key="index">
-            <h3>Genero: {{ index+1 }}</h3>
-            <input v-model="inputs[index]" type="text" required/>
-            <button @click="eliminarInput(index)">Eliminar</button>
-        </div>
+            <tr>
+                <td><label for="fep">Fecha de publicacion: </label></td>
+                <td><input type="date" name="fep" id="fep" v-model="libro.fep" required :max="fHoy"></td>
+            </tr>
 
-        <button type="submit">Guardar cambios</button>
+            <tr>
+                <th colspan="2">Fecha anterior: {{ dia()}}</th>
+            </tr>
+
+        <tr v-for="(input, index) in inputs" :key="index">
+            <th>
+                Genero: {{ index+1 }}
+                <input v-model="inputs[index]" type="text" required/>
+            </th>
+            <td class="boton" @click="eliminarInput(index)">Eliminar</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <button type="submit">Guardar cambios</button>
+                <button @click="agregarInput" type="button">Agregar Genero</button>
+            </td>
+        </tr>
+        
+
+        </table>
     </form>
 
-    <button @click="agregarInput">Agregar Genero</button>
 
 </template>
 <script>
@@ -119,6 +153,7 @@ export default{
                 }
             },
             eliminarInput(index) {
+                if(this.inputs.length!=1)
                 this.inputs.splice(index, 1); // Elimina el input en la posición 'index'
             },
 

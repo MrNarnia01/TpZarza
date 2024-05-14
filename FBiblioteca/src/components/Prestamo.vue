@@ -3,15 +3,15 @@
     <td> {{ fechaFormateada(prestamo.fInicio) }} </td>
     <td v-if="prestamo.bFin==false">-</td>
     <td align="center" v-else> {{ fechaFormateada(prestamo.fFin) }} </td>
-    <td v-if="prestamo.bFin==false">
-        <button @click="mod">Modificar</button>
+    <td v-if="prestamo.bFin==false" @click="mod" class="boton">
+        Modificar
     </td>
     <td v-else>-</td>
-    <td>
-        <button @click="elm">Eliminar</button>
+    <td @click="elm" class="boton">
+        Eliminar
     </td>
-    <td v-if="prestamo.bFin==false">
-        <button @click="fDev">Devolver</button>
+    <td v-if="prestamo.bFin==false" @click="fDev" class="boton">
+        Devolver
     </td>
     <td v-else>-</td>
 
