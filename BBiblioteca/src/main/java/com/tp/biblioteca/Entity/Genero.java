@@ -10,8 +10,6 @@ public class Genero {
     private Long gId;
     @Column(name="genero")
     private String genero;
-    @Column(name="idL")
-    private Long idL;
 
     public Long getgId() {
         return gId;
@@ -24,11 +22,5 @@ public class Genero {
     }
     public void setGenero(String genero) {
         this.genero = genero;
-    }
-    public Long getIdL() {
-        return idL;
-    }
-    public void setIdL(Long idL) {
-        this.idL = idL;
     }
 }

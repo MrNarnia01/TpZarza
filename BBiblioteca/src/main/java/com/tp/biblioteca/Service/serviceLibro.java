@@ -6,10 +6,11 @@ import com.tp.biblioteca.Entity.Prestamo;
 import com.tp.biblioteca.Repository.repositoryGenero;
 import com.tp.biblioteca.Repository.repositoryLibro;
 import com.tp.biblioteca.Repository.repositoryPrestamo;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -72,12 +73,59 @@ public class serviceLibro {
         return repoL.findByTitulo(Titulo);
     }
 
+    public List<Libro> busCantPag(int cantPag){
+        if(repoL.findByCantPag(cantPag).isEmpty()){
+            Libro error= new Libro();
+            error.setCantPag(1002);
+            error.setTitulo("Error");
+            List<Libro> er=new ArrayList<>();
+            er.add(error);
+            return er;
+        }
+        return repoL.findByCantPag(cantPag);
+    }
+
+    public List<Libro> busFep(int fep){
+        if(repoL.searchByFePQueryNative(fep).isEmpty()){
+            Libro error= new Libro();
+            error.setCantPag(1002);
+            error.setTitulo("Error");
+            List<Libro> er=new ArrayList<>();
+            er.add(error);
+            return er;
+        }
+        return repoL.searchByFePQueryNative(fep);
+    }
+
     public Long ultimo(){
         return repoL.searchByIdQueryNative();
     }
 
-    public List<Libro> busFec(List<Date> fechas){
-        if(repoL.searchByFecPuQueryNative(fechas.get(0), fechas.get(1)).isEmpty()){
+    public List<Libro> busFec(List<String> fechas) throws ParseException {
+        List<Libro> fec=repoL.findAll();
+        SimpleDateFormat form=new SimpleDateFormat("dd/MM/yyyy");
+        Date f1=form.parse(fechas.get(0));
+        Date f2=form.parse(fechas.get(1));
+        for (int i = 0; i < fec.size(); i++) {
+            if(f1.toInstant().isBefore(fec.get(i).getFep().toInstant())
+                && f2.toInstant().isAfter(fec.get(i).getFep().toInstant()) ){
+
+                System.out.println("Indice correcto: "+i);
+
+            }else{
+                System.out.println(f1);
+                System.out.println(f1.toInstant());
+                System.out.println(f2);
+                System.out.println(f2.toInstant());
+                System.out.println(f1.toInstant().isBefore(fec.get(i).getFep().toInstant()));
+                System.out.println(f2.toInstant().isAfter(fec.get(i).getFep().toInstant()));
+                System.out.println("Indice removido: "+i);
+                fec.remove(i);
+                i--;
+            }
+        }
+
+        if(fec.isEmpty()){
             Libro error= new Libro();
             error.setCantPag(1002);
             error.setTitulo("Error");
@@ -85,7 +133,7 @@ public class serviceLibro {
             er.add(error);
             return er;
         }
-        return repoL.searchByFecPuQueryNative(fechas.get(0), fechas.get(1));
+        return fec;
     }
 
     public void borrar(Long id) {
@@ -98,9 +146,6 @@ public class serviceLibro {
         libro.setPrestamos(null);
         Libro lib = repoL.save(libro);
 
-        for(int i=0; i<generos.size();i++){
-            generos.get(i).setIdL(lib.getlId());
-        }
         List<Genero> gen=repoG.saveAll(generos);
 
         lib.setGeneros(gen);
@@ -108,6 +153,48 @@ public class serviceLibro {
         return repoL.save(lib);
     }
 
+    public Libro mod(Libro libro) {
+        Optional<Libro> lib=repoL.findById(libro.getlId());
+        List<Genero> generos = lib.get().getGeneros();
+        repoL.borrarGen(libro.getlId());
+        repoG.deleteAll(generos);
+        generos = libro.getGeneros();
+
+        List<Genero> gen=repoG.saveAll(generos);
+
+        libro.setGeneros(gen);
+        return repoL.save(libro);
+
+        /*
+        Optional<Libro> lib=repoL.findById(libro.getlId());
+        List<Genero> listLib1=libro.getGeneros();
+        List<Genero> listLib2=lib.get().getGeneros();
+        List<Genero> generosABorrar = new ArrayList<>();
+        for (Genero genero : listLib1) {
+            boolean encontrado = false;
+            for (Genero g : listLib2) {
+                if (genero.getGenero().equals(g.getGenero())) {
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                generosABorrar.add(genero);
+            }
+        }
+
+        for (Genero genero : generosABorrar){
+            repoL.borrarGen(genero.getgId());
+            repoG.deleteById(genero.getgId());
+        }
+
+        List<Genero> gen=repoG.saveAll(listLib1);
+
+        libro.setGeneros(gen);
+
+
+        return repoL.save(libro);*/
+    }
 
     public List<Prestamo> pres(Long id) {
         Libro libro = repoL.findById(id).orElse(null);

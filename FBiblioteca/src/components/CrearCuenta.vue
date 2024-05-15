@@ -31,16 +31,28 @@
 </script>
 
 <template>
-  <h1>Crear Usuario</h1>
-  <form @submit.prevent="crear()">
-    <label for="nU">Nombre de usuario </label>
-    <input type="text" name="nU" id="nU" v-model="Usuario.nU" required>
-    <label for="con">Contraseña </label>
-    <input type="password" name="con" id="con" v-model="Usuario.con" required>
-
-    <button type="submit">Crear</button>
-    <button @click="inicio()">Volver al registro</button>
-  </form>
+<form @submit.prevent="crear()">
+  <table>
+    <tr>
+      <td colspan="2"><h1>Crear Usuario</h1></td>
+    </tr>
+    <tr>
+      <td><label for="nU">Nombre de usuario </label></td>
+      <td><input type="text" name="nU" id="nU" v-model="Usuario.nU" required></td>
+    </tr>
+    <tr>
+      <td><label for="con">Contraseña </label></td>
+      <td><input type="password" name="con" id="con" v-model="Usuario.con" required></td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <button type="submit">Crear</button>
+        <button @click="inicio()">Volver al registro</button>
+      </td>
+    </tr>
+    
+  </table>
+</form>
 </template>
 
 <style scoped>

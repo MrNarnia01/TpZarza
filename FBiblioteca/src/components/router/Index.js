@@ -6,6 +6,8 @@ import ListaLibros from '../ListaLibros.vue';
 import RegisLibro from '../RegisLibro.vue';
 import ListaPrestamo from '../ListaPrestamo.vue';
 import RegisPrestamo from '../RegisPrestamo.vue';
+import ModLibro from '../ModLibro.vue';
+import ModUsuario from '../ModUsuario.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +46,16 @@ const router = createRouter({
             path: '/RegisPrestamo',
             name: 'RegisPrestamo',
             component: RegisPrestamo
+        },
+        {
+            path: '/ModLibro',
+            name: 'ModLibro',
+            component: ModLibro
+        },
+        {
+            path: '/ModUsuario',
+            name: 'ModUsuario',
+            component: ModUsuario
         }
     ]
 })

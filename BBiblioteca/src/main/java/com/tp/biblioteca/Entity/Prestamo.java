@@ -3,7 +3,6 @@ package com.tp.biblioteca.Entity;
 import jakarta.persistence.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="Prestamo")
@@ -19,8 +18,6 @@ public class Prestamo {
     private boolean bFin;
     @Column(name="fFin")
     private Date fFin;
-    @Column(name="idL")
-    private Long idL;
 
     public Long getpId() {
         return pId;
@@ -45,11 +42,5 @@ public class Prestamo {
     }
     public void setbFin(boolean bFin) {
         this.bFin = bFin;
-    }
-    public Long getIdL() {
-        return idL;
-    }
-    public void setIdL(Long idL) {
-        this.idL = idL;
     }
 }

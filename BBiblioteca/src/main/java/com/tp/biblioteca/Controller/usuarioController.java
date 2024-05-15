@@ -31,7 +31,7 @@ public class usuarioController {
         if(us.getnU().equals("Error")){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(us.getCon());
         }
-        return ResponseEntity.ok("Inicio exitoso");
+        return ResponseEntity.ok(us);
     }
     @PostMapping
     public ResponseEntity<?> regisUsuario(@RequestBody Usuario usuario) {
@@ -42,8 +42,17 @@ public class usuarioController {
         return ResponseEntity.ok(usu);
     }
 
+    @PostMapping("/mod")
+    public ResponseEntity<?> modUsuario(@RequestBody Usuario usuario) {
+        Usuario usu = serU.modificar(usuario);
+        if(usu.getnU().equals("Error")){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(usu.getCon());
+        }
+        return ResponseEntity.ok(usu);
+    }
+
     @DeleteMapping("/del/{nom}")
-    public void borrarUsuario(@PathVariable String nom){
+    public void borrarUsuario(@PathVariable Long nom){
         serU.borrar(nom);
     }
 }
