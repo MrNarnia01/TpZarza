@@ -45,7 +45,7 @@ docker run -p 5173:5173 vue-app
 
 _Con la primera linea construimos la imagen y con la segunda la ejecutamos en un container_
 
-## Hecho con
+## Herramientas usadas
 
 * [PostgreSQL](https://www.postgresql.org/) -Sistema de gestión de bases de datos relacional orientado a objetos y de código abierto.
 * [Vue.js](https://vuejs.org/) -Framework de JavaScript de código abierto.
