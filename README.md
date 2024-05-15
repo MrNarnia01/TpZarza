@@ -1,7 +1,7 @@
 # Trabajo practico final
 
-_Materia: Laboratorio IV_
-_Profesor: Juan Zarza_
+* _Materia: Laboratorio IV_
+* _Profesor: Juan Zarza_
 
 ## Descripcion
 
